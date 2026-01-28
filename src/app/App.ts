@@ -13,13 +13,13 @@ export class App {
         this.initializeRoutes(routes);
         this.initializeErrorHandling();
 
-        // // Health Check Endpoint
-        // this.app.get("/_instance", (_, res) => {
-        //     res.json({
-        //         pid: process.pid,
-        //         port: process.env.PORT
-        //     });
-        // });
+        // Health Check Endpoint
+        this.app.get("/health", (_, res) => {
+            res.json({
+                pid: process.pid,
+                port: process.env.PORT
+            });
+        });
 
     }
 

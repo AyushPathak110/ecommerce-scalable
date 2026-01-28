@@ -10,10 +10,10 @@ import { connectProducer } from "./modules/event/event.producer.js";
 
 async function bootstrap() {
     
-    // await connectProducer();
+    await connectProducer();
 
-    // await startOrderPlacedConsumer();
-    // await startInventoryConsumer()
+    await startOrderPlacedConsumer();
+    await startInventoryConsumer()
 
     await connectToMongo(config.mongoUri);
 
