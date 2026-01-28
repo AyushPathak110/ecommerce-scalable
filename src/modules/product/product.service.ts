@@ -203,4 +203,17 @@ export class ProductService {
         ]);
     }
 
+    async reduceStock(productId: string, quantity: number): Promise<void> {
+        this.validateId(productId)
+
+        const product = await this.getByIdOrFail(productId)
+
+        if(quantity < 0 && product.stock < Math.abs(quantity)) {
+            throw new HttpException(400, "Insufficient stock")
+        }
+
+        product.stock -= quantity
+
+        await product.save()
+    }
 }

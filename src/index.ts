@@ -5,11 +5,15 @@ import { config } from "./config/index.js";
 
 import { connectToMongo } from "./config/mongo.js";
 import { startOrderPlacedConsumer } from "./modules/event/event.consumer.js";
+import { startInventoryConsumer } from "./modules/event/inventory.consumer.js";
 import { connectProducer } from "./modules/event/event.producer.js";
 
 async function bootstrap() {
+    
     await connectProducer();
+
     await startOrderPlacedConsumer();
+    await startInventoryConsumer()
 
     await connectToMongo(config.mongoUri);
 
