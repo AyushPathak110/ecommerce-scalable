@@ -1,6 +1,8 @@
-import express , { type Application } from "express"
+import express, { type Application } from "express"
 import type { Route } from "../routes/Route.js";
 import { errorMiddleware } from "../middlewares/ErrorMiddleware.js";
+
+
 
 export class App {
     private app: Application;
@@ -10,7 +12,16 @@ export class App {
         this.initializeMiddlewares();
         this.initializeRoutes(routes);
         this.initializeErrorHandling();
-    } 
+
+        // // Health Check Endpoint
+        // this.app.get("/_instance", (_, res) => {
+        //     res.json({
+        //         pid: process.pid,
+        //         port: process.env.PORT
+        //     });
+        // });
+
+    }
 
     private initializeMiddlewares(): void {
         this.app.use(express.json())
@@ -27,8 +38,8 @@ export class App {
         this.app.use(errorMiddleware)
     }
 
-    public listen (port: number) : void {
-        this.app.listen(port, ()=>{
+    public listen(port: number): void {
+        this.app.listen(port, () => {
             console.log(`Server started on port ${port}`)
         })
     }
