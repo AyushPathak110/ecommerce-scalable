@@ -17,9 +17,9 @@ export async function startOrderPlacedConsumer() {
 
       const event = JSON.parse(message.value.toString());
 
-      // 📧 Mock email sending
+      // Mock email sending
       console.log(
-        `📧 Email sent for order ${event.orderId} (₹${event.price})`
+        `Email sent for order ${event.orderId} (₹${event.price})`
       );
     }
   });

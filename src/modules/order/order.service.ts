@@ -16,6 +16,7 @@ export class OrderService {
     const {productId, quantity} = data;
 
     const product = await this.productService.getByIdOrFail(productId);
+    // console.log(product);
 
     if(product.stock < quantity){
       throw new HttpException(400, 'Insufficient stock for the requested product.');
@@ -24,7 +25,7 @@ export class OrderService {
     const totalPrice = product.price * quantity;
 
 
-    const order =await prisma.orders.create({
+    const order = await prisma.orders.create({
       data: {
         productId: data.productId,
         quantity: data.quantity,
