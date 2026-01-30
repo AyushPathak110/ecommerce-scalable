@@ -110,7 +110,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"status\": \"SHIPPED\"\r\n}",
+          "raw": "{\r\n    \"status\": \"CANCELLED\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -118,13 +118,13 @@
           }
         },
         "url": {
-          "raw": "{{base_url}}/orders/",
+          "raw": "{{base_url}}/orders/13",
           "host": [
             "{{base_url}}"
           ],
           "path": [
             "orders",
-            ""
+            "13"
           ],
           "query": [
             {
@@ -159,7 +159,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{base_url}}/orders?status=SHIPPED",
+          "raw": "{{base_url}}/orders?status=DELIVERED",
           "host": [
             "{{base_url}}"
           ],
@@ -174,7 +174,7 @@
             },
             {
               "key": "status",
-              "value": "SHIPPED"
+              "value": "DELIVERED"
             }
           ]
         },
