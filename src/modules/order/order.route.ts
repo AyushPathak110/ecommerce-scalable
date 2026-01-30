@@ -26,5 +26,13 @@ export class OrderRoute implements Route {
             "/",
             asyncHandler(this.controller.getAll)
         );
+        this.router.get(
+            "/:id",
+            asyncHandler(this.controller.getById)
+        )
+        this.router.patch(
+            "/:id",
+            asyncHandler(this.controller.updateStatus)
+        )
     }
 }

@@ -26,5 +26,5 @@ enum Status {
   PENDING
   SHIPPED
   DELIVERED
-  CANCELED
+  CANCELLED
 }

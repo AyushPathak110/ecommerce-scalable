@@ -1,9 +1,6 @@
-import { equal } from "node:assert";
 import { HttpException } from "../../errors/HttpException.js";
 import { ProductModel, type Product, type ProductDocument } from "./product.model.js";
 import mongoose from "mongoose";
-import path from "node:path";
-import { text } from "node:stream/consumers";
 
 type paramsCheck = {
     query?: string;
