@@ -4,7 +4,7 @@ const consumer = kafka.consumer({
   groupId: "email-service"
 });
 
-export async function startOrderPlacedConsumer() {
+export async function startEmailConsumer() {
   await consumer.connect();
   await consumer.subscribe({
     topic: "order.placed",

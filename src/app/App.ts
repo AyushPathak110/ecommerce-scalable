@@ -2,8 +2,6 @@ import express, { type Application } from "express"
 import type { Route } from "../routes/Route.js";
 import { errorMiddleware } from "../middlewares/ErrorMiddleware.js";
 
-
-
 export class App {
     private app: Application;
 
@@ -13,13 +11,13 @@ export class App {
         this.initializeRoutes(routes);
         this.initializeErrorHandling();
 
-        // Health Check Endpoint
-        this.app.get("/health", (_, res) => {
-            res.json({
-                pid: process.pid,
-                port: process.env.PORT
-            });
-        });
+        // // Health Check Endpoint
+        // this.app.get("/health", (_, res) => {
+        //     res.json({
+        //         pid: process.pid,
+        //         port: process.env.PORT
+        //     });
+        // });
 
     }
 

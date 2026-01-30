@@ -25,6 +25,12 @@
 
 ---
 
+## Quick note
+
+- The repo also contains a json file for the postman collection that you can import and use.
+
+---
+
 ## System Architecture
 
 ![alt text](<Scalable Ecommerce.png>)
