@@ -17,8 +17,8 @@ export async function publishOrderPlaced(event: {
     messages: [
       {
         key: String(event.orderId),
-        value: JSON.stringify(event)
-      }
-    ]
+        value: JSON.stringify(event),
+      },
+    ],
   });
 }

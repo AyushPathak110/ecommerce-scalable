@@ -29,12 +29,8 @@
         "header": [],
         "url": {
           "raw": "{{base_url}}/products",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "products"
-          ],
+          "host": ["{{base_url}}"],
+          "path": ["products"],
           "query": [
             {
               "key": "id",
@@ -69,13 +65,8 @@
         "header": [],
         "url": {
           "raw": "{{base_url}}/orders/2",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "orders",
-            "2"
-          ],
+          "host": ["{{base_url}}"],
+          "path": ["orders", "2"],
           "query": [
             {
               "key": "id",
@@ -119,13 +110,8 @@
         },
         "url": {
           "raw": "{{base_url}}/orders/13",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "orders",
-            "13"
-          ],
+          "host": ["{{base_url}}"],
+          "path": ["orders", "13"],
           "query": [
             {
               "key": "id",
@@ -160,12 +146,8 @@
         "header": [],
         "url": {
           "raw": "{{base_url}}/orders?status=DELIVERED",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "orders"
-          ],
+          "host": ["{{base_url}}"],
+          "path": ["orders"],
           "query": [
             {
               "key": "id",
@@ -204,12 +186,8 @@
         "header": [],
         "url": {
           "raw": "{{base_url}}/orders",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "orders"
-          ],
+          "host": ["{{base_url}}"],
+          "path": ["orders"],
           "query": [
             {
               "key": "id",
@@ -244,13 +222,8 @@
         "header": [],
         "url": {
           "raw": "{{base_url}}/products/69788e9c12c61fbdbb3efdcc",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "products",
-            "69788e9c12c61fbdbb3efdcc"
-          ]
+          "host": ["{{base_url}}"],
+          "path": ["products", "69788e9c12c61fbdbb3efdcc"]
         },
         "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
       },
@@ -278,13 +251,8 @@
         "header": [],
         "url": {
           "raw": "{{base_url}}/products/autocomplete?q=sam",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "products",
-            "autocomplete"
-          ],
+          "host": ["{{base_url}}"],
+          "path": ["products", "autocomplete"],
           "query": [
             {
               "key": "q",
@@ -318,13 +286,8 @@
         "header": [],
         "url": {
           "raw": "{{base_url}}/products/search?q=Oneplus&category=mobile&minPrice=1500",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "products",
-            "search"
-          ],
+          "host": ["{{base_url}}"],
+          "path": ["products", "search"],
           "query": [
             {
               "key": "q",
@@ -381,12 +344,8 @@
         },
         "url": {
           "raw": "{{base_url}}/orders",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "orders"
-          ]
+          "host": ["{{base_url}}"],
+          "path": ["orders"]
         },
         "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
       },
@@ -424,12 +383,8 @@
         },
         "url": {
           "raw": "{{base_url}}/products",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "products"
-          ]
+          "host": ["{{base_url}}"],
+          "path": ["products"]
         },
         "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
       },
@@ -467,13 +422,8 @@
         },
         "url": {
           "raw": "{{base_url}}/products/69788e9c12c61fbdbb3efdcc",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "products",
-            "69788e9c12c61fbdbb3efdcc"
-          ]
+          "host": ["{{base_url}}"],
+          "path": ["products", "69788e9c12c61fbdbb3efdcc"]
         },
         "description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
       },
@@ -511,13 +461,8 @@
         },
         "url": {
           "raw": "{{base_url}}/products/69788f715c2eb4e7842b6acd",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "products",
-            "69788f715c2eb4e7842b6acd"
-          ]
+          "host": ["{{base_url}}"],
+          "path": ["products", "69788f715c2eb4e7842b6acd"]
         },
         "description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
       },
@@ -529,18 +474,14 @@
       "listen": "prerequest",
       "script": {
         "type": "text/javascript",
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     },
     {
       "listen": "test",
       "script": {
         "type": "text/javascript",
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     }
   ],

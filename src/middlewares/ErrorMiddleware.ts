@@ -2,16 +2,16 @@ import type { NextFunction, Request, Response } from "express";
 import { HttpException } from "../errors/HttpException.js";
 
 export function errorMiddleware(
-    error: HttpException,
-    req: Request,
-    res: Response,
-    next: NextFunction
+  error: HttpException,
+  req: Request,
+  res: Response,
+  next: NextFunction,
 ): void {
-    const status = error.status || 500;
-    const message = error.message || "Something went wrong!";
+  const status = error.status || 500;
+  const message = error.message || "Something went wrong!";
 
-    res.status(status).json({
-        status,
-        message
-    })
+  res.status(status).json({
+    status,
+    message,
+  });
 }

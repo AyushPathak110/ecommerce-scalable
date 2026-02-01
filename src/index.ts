@@ -9,16 +9,15 @@ import { startInventoryConsumer } from "./modules/event/inventory.consumer.js";
 import { connectProducer } from "./modules/event/event.producer.js";
 
 async function bootstrap() {
-    
-    await connectProducer();
+  await connectProducer();
 
-    await startEmailConsumer();
-    await startInventoryConsumer()
+  await startEmailConsumer();
+  await startInventoryConsumer();
 
-    await connectToMongo(config.mongoUri);
+  await connectToMongo(config.mongoUri);
 
-    const server = new App([new ProductRoute(), new OrderRoute()]);
-    server.listen(config.port)
+  const server = new App([new ProductRoute(), new OrderRoute()]);
+  server.listen(config.port);
 }
 
 bootstrap();

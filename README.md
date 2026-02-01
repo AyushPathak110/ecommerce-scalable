@@ -14,7 +14,7 @@
 
 ---
 
-##  Tech Stack
+## Tech Stack
 
 - Node.js + TypeScript
 - Express
