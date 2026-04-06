@@ -16,6 +16,7 @@ type paramsCheck = {
 export class ProductService {
   private validateId(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
+      console.log("Validation failed for ID:", id);
       throw new HttpException(400, "Invalid product id");
     }
   }
@@ -40,18 +41,32 @@ export class ProductService {
     return ProductModel.create(data).then((doc) => doc.toObject());
   }
 
-  async getAll(): Promise<Product[]> {
-    return ProductModel.find().lean<Product[]>();
+  async getAll(limit?: number): Promise<Product[]> {
+    return ProductModel.find()
+      .limit(limit || 10)
+      .lean<Product[]>();
+  }
+
+  async count(): Promise<number> {
+    return ProductModel.countDocuments();
   }
 
   async getById(id: string): Promise<Product> {
     this.validateId(id);
-    // console.log(typeof id);
 
-    const product = await ProductModel.findById(id).lean<Product>();
+    // 1. Try to find by standard ObjectId (this is what Mongoose does by default)
+    let product = await ProductModel.findById(id).lean<Product>();
+
+    // 2. If not found, it might be stored as a String in Atlas.
+    // We use the raw collection access to bypass Mongoose's automatic casting to ObjectId.
+    if (!product) {
+      product = (await ProductModel.collection.findOne({
+        _id: id as any,
+      })) as unknown as Product;
+    }
 
     if (!product) {
-      throw new HttpException(404, "Product not found");
+      throw new HttpException(404, `Product not found with ID: ${id}`);
     }
 
     return product;
@@ -59,12 +74,28 @@ export class ProductService {
 
   async updateProduct(id: string, data: Partial<Product>): Promise<Product> {
     this.validateId(id);
-    // console.log(typeof id);
 
-    const product = await ProductModel.findByIdAndUpdate(id, data, {
+    // Filter out empty strings from the update data to avoid validation errors on required fields
+    const updateData = Object.fromEntries(
+      Object.entries(data).filter(([_, v]) => v !== ""),
+    );
+
+    // 1. Regular update (uses Mongoose type casting to ObjectId)
+    let product = await ProductModel.findByIdAndUpdate(id, updateData, {
       new: true,
       runValidators: true,
     }).lean<Product>();
+
+    // 2. If not found, try string fallback
+    if (!product) {
+      await ProductModel.collection.updateOne(
+        { _id: id as any },
+        { $set: updateData },
+      );
+      product = (await ProductModel.collection.findOne({
+        _id: id as any,
+      })) as unknown as Product;
+    }
 
     if (!product) {
       throw new HttpException(404, "Product not found");
@@ -76,10 +107,18 @@ export class ProductService {
   async deleteProduct(id: string): Promise<boolean> {
     this.validateId(id);
 
-    const product = await ProductModel.findByIdAndDelete(id);
+    // 1. Regular delete (uses Mongoose type casting to ObjectId)
+    let product = await ProductModel.findByIdAndDelete(id);
 
+    // 2. String fallback delete
     if (!product) {
-      throw new HttpException(404, "Product not found");
+      const result = await ProductModel.collection.deleteOne({
+        _id: id as any,
+      });
+      if (result.deletedCount === 0) {
+        throw new HttpException(404, "Product not found");
+      }
+      return true;
     }
 
     return true;
@@ -90,27 +129,16 @@ export class ProductService {
 
     const must = [];
     const filter = [];
-    const should = []; // For boosting relevance
 
     if (query) {
       must.push({
         text: {
           query,
-          path: ["name", "description"], // Search in both fields
+          path: ["name", "description"],
           fuzzy: {
             maxEdits: 2,
-            prefixLength: 2, // First character must match exactly
+            prefixLength: 3,
           },
-          score: { boost: { value: 2 } },
-        },
-      });
-
-      // Boost exact matches in name
-      should.push({
-        text: {
-          query,
-          path: "name",
-          score: { boost: { value: 3 } },
         },
       });
     }
@@ -135,17 +163,16 @@ export class ProductService {
     }
 
     const searchStage: any = {
-      index: "products_search",
+      index: "product",
       compound: {},
     };
 
     // Only add clauses if they have content
     if (must.length) searchStage.compound.must = must;
-    if (should.length) searchStage.compound.should = should;
     if (filter.length) searchStage.compound.filter = filter;
 
     // If no search criteria, return all documents sorted by relevance
-    if (!must.length && !should.length && !filter.length) {
+    if (!must.length && !filter.length) {
       return ProductModel.find().limit(20).lean();
     }
 
@@ -177,7 +204,7 @@ export class ProductService {
     return ProductModel.aggregate([
       {
         $search: {
-          index: "products_search",
+          index: "product",
           autocomplete: {
             query: query.trim(),
             path: "name",
@@ -193,10 +220,7 @@ export class ProductService {
       },
       {
         $project: {
-          name: 1,
-          category: 1,
-          price: 1,
-          score: { $meta: "searchScore" },
+          name: 1
         },
       },
     ]);

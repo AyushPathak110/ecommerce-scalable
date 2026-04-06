@@ -16,6 +16,7 @@ export class ProductRoute {
 
   private initializeRoutes(): void {
     this.router.get("/", asyncHandler(this.controller.getAll));
+    this.router.get("/count", asyncHandler(this.controller.count));
     this.router.get("/search", asyncHandler(this.controller.search));
     this.router.get(
       "/autocomplete",
