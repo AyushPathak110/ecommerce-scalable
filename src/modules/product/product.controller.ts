@@ -20,11 +20,18 @@ export class ProductController {
   };
 
   getAll = async (req: Request, res: Response) => {
-    const products = await this.productService.getAll();
+    const limit = req.query.limit ? Number(req.query.limit) : undefined;
+    const products = await this.productService.getAll(limit);
     res.status(200).json(products);
   };
 
+  count = async (req: Request, res: Response) => {
+    const total = await this.productService.count();
+    res.status(200).json({ total });
+  };
+
   getById = async (req: Request, res: Response) => {
+    console.log("Product ID from params:", req.params);
     const id = this.getStringParam(req.params.id, "product id");
     const product = await this.productService.getById(id);
     res.status(200).json(product);
@@ -37,6 +44,8 @@ export class ProductController {
 
   updateProduct = async (req: Request, res: Response) => {
     const id = this.getStringParam(req.params.id, "product id");
+    console.log("Updating product ID:", id);
+    console.log("Update data received:", req.body);
     const updatedProduct = await this.productService.updateProduct(
       id,
       req.body,

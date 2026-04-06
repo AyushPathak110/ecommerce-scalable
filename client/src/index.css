@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --bg: #f5f5f2;
+  --panel: rgba(255, 255, 255, 0.78);
+  --panel-strong: rgba(255, 255, 255, 0.95);
+  --line: rgba(15, 23, 42, 0.08);
+  --text: #111827;
+  --muted: #5b6472;
+  --accent: #0f766e;
+  --accent-soft: rgba(15, 118, 110, 0.1);
+  --shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: #09090b;
+  --panel: rgba(24, 24, 27, 0.8);
+  --panel-strong: rgba(20, 20, 24, 0.95);
+  --line: rgba(255, 255, 255, 0.08);
+  --text: #f5f5f5;
+  --muted: #a1a1aa;
+  --accent: #5eead4;
+  --accent-soft: rgba(94, 234, 212, 0.14);
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+}
+
+html {
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.12), transparent 32%),
+    radial-gradient(circle at top right, rgba(148, 163, 184, 0.14), transparent 22%),
+    var(--bg);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: transparent;
+  color: var(--text);
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+@layer components {
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
+  }
+
+  .panel-strong {
+    background: var(--panel-strong);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
+  }
+
+  .field {
+    @apply w-full rounded-2xl border px-4 py-3 text-sm outline-none transition;
+    border-color: var(--line);
+    background: var(--panel-strong);
+    color: var(--text);
+  }
+
+  select.field {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.25rem center;
+    background-size: 1.25rem;
+    padding-right: 3rem;
+  }
+
+  .field option {
+    background-color: var(--bg);
+    color: var(--text);
+  }
+
+  .field::placeholder {
+    color: var(--muted);
+  }
+
+  .field:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+    background: var(--panel-strong);
+  }
+
+  .button-primary {
+    @apply rounded-2xl px-4 py-3 text-sm font-medium transition;
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .button-primary:hover {
+    opacity: 0.92;
+  }
+
+  .button-secondary {
+    @apply rounded-2xl px-4 py-3 text-sm font-medium transition;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--text);
+  }
+
+  .button-secondary:hover {
+    background: var(--accent-soft);
+  }
+}
