@@ -7,8 +7,8 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      "/products": "http://localhost:4000",
-      "/orders": "http://localhost:4000",
+      "/products": "http://localhost:3000",
+      "/orders": "http://localhost:3001",
     },
   },
 });
