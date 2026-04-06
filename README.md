@@ -1,6 +1,9 @@
-# Scalable E‑commerce (Backend)
+# Scalable E-Commerce (Backend)
 
-**A Node.js + TypeScript backend for a scalable e-commerce demo.**
+## Scalable Pipeline for E-commerce Event Distribution (SPEED)
+
+A distributed e-commerce backend architecture designed for high scalability and
+event-driven processing using Nginx, Express.js, Kafka, MySQL, and MongoDB.
 
 ---
 
