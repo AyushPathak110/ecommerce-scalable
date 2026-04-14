@@ -124,21 +124,18 @@ export class ProductService {
     return true;
   }
 
-  async search(params: paramsCheck) {
-    const { query, category, minPrice, maxPrice } = params;
+  async search(params: paramsCheck & { limit?: number }) {
+    const { query, category, minPrice, maxPrice, limit = 12 } = params;
 
-    const must = [];
-    const filter = [];
+    const must: any[] = [];
+    const filter: any[] = [];
 
-    if (query) {
+    if (query && query.trim()) {
       must.push({
-        text: {
-          query,
-          path: ["name", "description"],
-          fuzzy: {
-            maxEdits: 2,
-            prefixLength: 3,
-          },
+        autocomplete: {
+          query: query.trim(),
+          path: "name",
+          fuzzy: {},
         },
       });
     }
@@ -157,7 +154,7 @@ export class ProductService {
         range: {
           path: "price",
           gte: minPrice ?? 0,
-          lte: maxPrice ?? Number.MAX_SAFE_INTEGER, // Better than hardcoded
+          lte: maxPrice ?? 10000000,
         },
       });
     }
@@ -167,21 +164,22 @@ export class ProductService {
       compound: {},
     };
 
-    // Only add clauses if they have content
     if (must.length) searchStage.compound.must = must;
     if (filter.length) searchStage.compound.filter = filter;
 
-    // If no search criteria, return all documents sorted by relevance
+    console.log("Executing search aggregation:", JSON.stringify(searchStage, null, 2));
+
+    // Fallback if no criteria
     if (!must.length && !filter.length) {
-      return ProductModel.find().limit(20).lean();
+      return ProductModel.find().limit(limit).lean();
     }
 
-    return ProductModel.aggregate([
+    const results = await ProductModel.aggregate([
       {
         $search: searchStage,
       },
       {
-        $limit: 5,
+        $limit: limit,
       },
       {
         $project: {
@@ -194,6 +192,9 @@ export class ProductService {
         },
       },
     ]);
+
+    console.log(`Search returned ${results.length} results`);
+    return results;
   }
 
   async autocomplete(query: string) {

@@ -60,13 +60,14 @@ export class ProductController {
   };
 
   search = async (req: Request, res: Response) => {
-    const { q, category, minPrice, maxPrice } = req.query;
+    const { q, category, minPrice, maxPrice, limit } = req.query;
 
     const results = await this.productService.search({
       query: q as string,
       category: category as string,
       minPrice: minPrice ? Number(minPrice) : undefined,
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
+      limit: limit ? Number(limit) : undefined,
     });
 
     res.json(results);

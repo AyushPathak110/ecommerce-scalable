@@ -41,7 +41,7 @@ export async function startEmailConsumer() {
         } else {
           await transporter.sendMail({
             from: `"Scalable Ecommerce" <${config.smtpUser}>`,
-            to: "anything6o9o@gmail.com",
+            to: "ayushpathak1102004@gmail.com",
             subject: `Order Confirmation #${event.orderId}`,
             html: `
               <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9f9f9; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
